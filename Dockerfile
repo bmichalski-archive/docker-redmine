@@ -37,8 +37,6 @@ RUN \
   cd /opt/redmine/redmine && \
   gem install bundler
 
-COPY conf/opt/redmine/redmine/config /opt/redmine/redmine/config
-
 RUN \
   apt-get install -y \
     make \
@@ -49,6 +47,9 @@ RUN \
     libmagickcore-dev \
     libmagickwand-dev
 
+COPY conf/opt/redmine/redmine/config/configuration.yml /opt/redmine/redmine/config/configuration.yml
+COPY conf/opt/redmine/redmine/config/database.yml /opt/redmine/redmine/config/database.yml
+
 RUN \
   su - redmine -c "cd /opt/redmine/redmine && bundle install --without development test"
 
@@ -58,7 +59,27 @@ RUN \
   chown -R redmine:redmine files log tmp public/plugin_assets && \
   chmod -R 755 files log tmp public/plugin_assets
 
-COPY conf/home/redmine /home/redmine
-
 RUN \
-  chmod u+x /home/redmine/init.sh
+  apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 && \
+  apt-get install -y \
+    apt-transport-https \
+    ca-certificates \
+  && \
+  echo deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main > /etc/apt/sources.list.d/passenger.list && \
+  chown root: /etc/apt/sources.list.d/passenger.list && \
+  chmod 600 /etc/apt/sources.list.d/passenger.list
+
+COPY conf/opt/redmine/redmine/config/secrets.yml /opt/redmine/redmine/config/secrets.yml
+
+#RUN \
+#  apt-get update && \
+#  apt-get install -y \
+#    nginx \
+#    nginx-extras \
+#    passenger
+
+#RUN \
+#  mv /usr/bin/ruby /usr/bin/ruby.bak && \
+#  ln -s /etc/alternatives/ruby /usr/bin/ruby
+
+#COPY conf/etc/nginx /etc/nginx

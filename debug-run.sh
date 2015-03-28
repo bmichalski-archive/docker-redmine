@@ -29,25 +29,6 @@ docker run \
   --name redmine-mariadb \
   -d bmichalski/mariadb
 
-if [ "$FIRST_RUN" = true ]
-then
-  echo "First run, configuring."
-  attempt=0
-  while [ $attempt -le 59 ]; do
-    attempt=$(( $attempt + 1 ))
-    echo "Waiting for server to be up (attempt: $attempt)..."
-      result=$(docker logs redmine-mariadb)
-      if grep -q 'ready for connections' <<< $result ; then
-        echo "MariaDB is up, configuring."
-        docker exec redmine-mariadb mysql -u root -e "CREATE DATABASE redmine CHARACTER SET UTF8;"
-        docker exec redmine-mariadb mysql -u root -e "CREATE USER 'redmine'@'%' IDENTIFIED BY 'redmine';"
-        docker exec redmine-mariadb mysql -u root -e "GRANT ALL PRIVILEGES ON redmine.* TO 'redmine'@'%';"
-        break
-      fi
-      sleep 2
-    done
-fi
-
 REDMINE_EXISTS=`docker inspect --format="{{ .Id }}" redmine 2> /dev/null`
 REDMINE_DATA_EXISTS=`docker inspect --format="{{ .Id }}" redmine-data 2> /dev/null`
 
@@ -55,7 +36,6 @@ if [ -z "$REDMINE_DATA_EXISTS" ]
 then
   docker run \
     -d \
-    -v /opt/redmine/redmine/vendor \
     --name redmine-data \
     ubuntu:14.04
 fi
@@ -68,6 +48,13 @@ fi
 
 docker run \
   -p 80:80 \
+  -e REDMINE_DATABASE_HOST=redmine-mariadb \
+  -e REDMINE_DATABASE_NAME=redmine \
+  -e REDMINE_DATABASE_USERNAME=redmine \
+  -e REDMINE_DATABASE_PASSWORD=redmine \
+  -e REDMINE_DATABASE_ENCODING=utf8 \
+  -e REDMINE_SECRET_TOKEN=__CHANGE_ME__ \
+  -e REDMINE_SECRET_KEY_BASE=__CHANGE_ME__ \
   --link redmine-mariadb:redmine-mariadb \
   --volumes-from redmine-data \
   --name redmine \
