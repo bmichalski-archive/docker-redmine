@@ -71,15 +71,23 @@ RUN \
 
 COPY conf/opt/redmine/redmine/config/secrets.yml /opt/redmine/redmine/config/secrets.yml
 
-#RUN \
-#  apt-get update && \
-#  apt-get install -y \
-#    nginx \
-#    nginx-extras \
-#    passenger
+RUN \
+  apt-get update && \
+  apt-get install -y \
+    nginx \
+    nginx-extras \
+    passenger
 
-#RUN \
-#  mv /usr/bin/ruby /usr/bin/ruby.bak && \
-#  ln -s /etc/alternatives/ruby /usr/bin/ruby
+RUN \
+  mv /usr/bin/ruby /usr/bin/ruby.bak && \
+  ln -s /etc/alternatives/ruby /usr/bin/ruby
 
-#COPY conf/etc/nginx /etc/nginx
+COPY conf/etc/nginx /etc/nginx
+
+COPY conf/root /root
+
+RUN \
+  chmod u+x /root/on-startup.sh
+
+RUN \
+  rm /root/redmine-3.0.1.tar.gz

@@ -48,13 +48,15 @@ fi
 
 docker run \
   -p 80:80 \
-  -e REDMINE_DATABASE_HOST=redmine-mariadb \
-  -e REDMINE_DATABASE_NAME=redmine \
-  -e REDMINE_DATABASE_USERNAME=redmine \
-  -e REDMINE_DATABASE_PASSWORD=redmine \
-  -e REDMINE_DATABASE_ENCODING=utf8 \
-  -e REDMINE_SECRET_TOKEN=__CHANGE_ME__ \
-  -e REDMINE_SECRET_KEY_BASE=__CHANGE_ME__ \
+  -e "REDMINE_WEB_HOST=localhost" \
+  -e "REDMINE_WEB_PORT=80" \
+  -e "REDMINE_DATABASE_HOST=redmine-mariadb" \
+  -e "REDMINE_DATABASE_NAME=redmine" \
+  -e "REDMINE_DATABASE_USERNAME=redmine" \
+  -e "REDMINE_DATABASE_PASSWORD=redmine" \
+  -e "REDMINE_DATABASE_ENCODING=utf8" \
+  -e "REDMINE_SECRET_TOKEN=__CHANGE_ME__" \
+  -e "REDMINE_SECRET_KEY_BASE=__CHANGE_ME__" \
   --link redmine-mariadb:redmine-mariadb \
   --volumes-from redmine-data \
   --name redmine \
