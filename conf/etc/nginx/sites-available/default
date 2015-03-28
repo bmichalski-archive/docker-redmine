@@ -1,6 +1,7 @@
 server {
   listen __REDMINE_WEB_PORT__;
   server_name __REDMINE_WEB_HOST__;
+
   root /opt/redmine/redmine/public;
 
   client_max_body_size 10m;
@@ -17,3 +18,5 @@ server {
   passenger_env_var REDMINE_SECRET_TOKEN        __REDMINE_SECRET_TOKEN__;
   passenger_env_var REDMINE_SECRET_KEY_BASE     __REDMINE_SECRET_KEY_BASE__;
 }
+
+passenger_pre_start __REDMINE_WEB_HOST__;
