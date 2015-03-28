@@ -2,8 +2,8 @@
 
 VHOST_CONFIGURATION_FILE=/etc/nginx/sites-available/default
 
-sudo sed -i "s/__REDMINE_WEB_HOST__/${REDMINE_WEB_HOST}/" $VHOST_CONFIGURATION_FILE
-sudo sed -i "s/__REDMINE_WEB_PORT__/${REDMINE_WEB_PORT}/" $VHOST_CONFIGURATION_FILE
+sudo sed -i "s/__REDMINE_WEB_HOST__/${REDMINE_WEB_HOST}/"                   $VHOST_CONFIGURATION_FILE
+sudo sed -i "s/__REDMINE_WEB_PORT__/${REDMINE_WEB_PORT}/"                   $VHOST_CONFIGURATION_FILE
 
 sudo sed -i "s/__REDMINE_DATABASE_HOST__/${REDMINE_DATABASE_HOST}/"         $VHOST_CONFIGURATION_FILE
 sudo sed -i "s/__REDMINE_DATABASE_NAME__/${REDMINE_DATABASE_NAME}/"         $VHOST_CONFIGURATION_FILE
@@ -13,5 +13,9 @@ sudo sed -i "s/__REDMINE_DATABASE_ENCODING__/${REDMINE_DATABASE_ENCODING}/" $VHO
 
 sudo sed -i "s/__REDMINE_SECRET_TOKEN__/${REDMINE_SECRET_TOKEN}/"           $VHOST_CONFIGURATION_FILE
 sudo sed -i "s/__REDMINE_SECRET_KEY_BASE__/${REDMINE_SECRET_KEY_BASE}/"     $VHOST_CONFIGURATION_FILE
+
+cd /opt/redmine/redmine && \
+sudo chown -R redmine:redmine files log && \
+sudo chmod -R 755 files log
 
 sudo service nginx start

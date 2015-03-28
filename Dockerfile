@@ -56,8 +56,8 @@ RUN \
 RUN \
   cd /opt/redmine/redmine && \
   mkdir -p tmp public/plugin_assets && \
-  chown -R redmine:redmine files log tmp public/plugin_assets && \
-  chmod -R 755 files log tmp public/plugin_assets
+  chown -R redmine:redmine tmp public/plugin_assets && \
+  chmod -R 755 tmp public/plugin_assets
 
 RUN \
   apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7 && \

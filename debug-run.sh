@@ -36,6 +36,8 @@ if [ -z "$REDMINE_DATA_EXISTS" ]
 then
   docker run \
     -d \
+    -v /opt/redmine/redmine/files \
+    -v /opt/redmine/redmine/log \
     --name redmine-data \
     ubuntu:14.04
 fi
