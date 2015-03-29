@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 
-ENV HOME /root
+MAINTAINER Benjamin Michalski <benjamin.michalski@gmail.com>
 
 WORKDIR /root
 
