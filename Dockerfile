@@ -74,15 +74,24 @@ COPY conf/opt/redmine/redmine/config/secrets.yml /opt/redmine/redmine/config/sec
 RUN \
   apt-get update && \
   apt-get install -y \
-    nginx \
-    nginx-extras \
     passenger
 
 RUN \
   mv /usr/bin/ruby /usr/bin/ruby.bak && \
   ln -s /etc/alternatives/ruby /usr/bin/ruby
 
-COPY conf/etc/nginx /etc/nginx
+RUN \
+  apt-get install -y \
+    build-essential \
+    libcurl4-openssl-dev \
+    libssl-dev
+
+RUN \
+  passenger-install-nginx-module \
+    --auto \
+    --prefix=/opt/nginx
+
+COPY conf/opt/nginx /opt/nginx
 
 COPY conf/root /root
 
@@ -91,3 +100,11 @@ RUN \
 
 RUN \
   rm /root/redmine-3.0.1.tar.gz
+
+RUN \
+  mkdir -p /var/log/vhost/redmine && \
+  touch /var/log/vhost/redmine/access.log && \
+  touch /var/log/vhost/redmine/error.log && \
+  chown -R www-data:adm /var/log/vhost && \
+  chmod 750 /var/log/vhost && \
+  chown -R redmine:adm /var/log/vhost/redmine

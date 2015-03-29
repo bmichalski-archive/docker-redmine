@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VHOST_CONFIGURATION_FILE=/etc/nginx/sites-available/default
+VHOST_CONFIGURATION_FILE=/opt/nginx/conf/vhost/default
 
 sudo sed -i "s/__REDMINE_WEB_HOST__/${REDMINE_WEB_HOST}/"                   $VHOST_CONFIGURATION_FILE
 sudo sed -i "s/__REDMINE_WEB_PORT__/${REDMINE_WEB_PORT}/"                   $VHOST_CONFIGURATION_FILE
@@ -18,4 +18,9 @@ cd /opt/redmine/redmine && \
 sudo chown -R redmine:redmine files log && \
 sudo chmod -R 755 files log
 
-sudo service nginx start
+/opt/nginx/sbin/nginx
+
+tail -f \
+  /opt/nginx/logs/*.log \
+  /var/log/vhost/redmine/*.log \
+  /opt/redmine/redmine/log/*.log

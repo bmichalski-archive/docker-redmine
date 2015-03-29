@@ -6,6 +6,9 @@ server {
 
   client_max_body_size 10m;
 
+  access_log /var/log/vhost/redmine/access.log;
+  error_log /var/log/vhost/redmine/error.log;
+
   passenger_enabled on;
   passenger_friendly_error_pages on;
 
@@ -19,4 +22,4 @@ server {
   passenger_env_var REDMINE_SECRET_KEY_BASE     __REDMINE_SECRET_KEY_BASE__;
 }
 
-passenger_pre_start __REDMINE_WEB_HOST__;
+passenger_pre_start http://__REDMINE_WEB_HOST__;
