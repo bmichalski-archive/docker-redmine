@@ -11,15 +11,6 @@ server {
 
   passenger_enabled on;
   passenger_friendly_error_pages on;
-
-  passenger_env_var REDMINE_DATABASE_HOST       __REDMINE_DATABASE_HOST__;
-  passenger_env_var REDMINE_DATABASE_NAME       __REDMINE_DATABASE_NAME__;
-  passenger_env_var REDMINE_DATABASE_USERNAME   __REDMINE_DATABASE_USERNAME__;
-  passenger_env_var REDMINE_DATABASE_PASSWORD   __REDMINE_DATABASE_PASSWORD__;
-  passenger_env_var REDMINE_DATABASE_ENCODING   __REDMINE_DATABASE_ENCODING__;
-
-  passenger_env_var REDMINE_SECRET_TOKEN        __REDMINE_SECRET_TOKEN__;
-  passenger_env_var REDMINE_SECRET_KEY_BASE     __REDMINE_SECRET_KEY_BASE__;
 }
 
 passenger_pre_start http://__REDMINE_WEB_HOST__;

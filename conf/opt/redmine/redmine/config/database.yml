@@ -1,7 +1,7 @@
 production:
   adapter: mysql2
-  host: <%= ENV["REDMINE_DATABASE_HOST"] %>
-  database: <%= ENV["REDMINE_DATABASE_NAME"] %>
-  username: <%= ENV["REDMINE_DATABASE_USERNAME"] %>
-  password: <%= ENV["REDMINE_DATABASE_PASSWORD"] %>
-  encoding: <%= ENV["REDMINE_DATABASE_ENCODING"] %>
+  host: __REDMINE_DATABASE_HOST__
+  database: __REDMINE_DATABASE_NAME__
+  username: __REDMINE_DATABASE_USERNAME__
+  password: __REDMINE_DATABASE_PASSWORD__
+  encoding: __REDMINE_DATABASE_ENCODING__

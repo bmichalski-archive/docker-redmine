@@ -63,4 +63,4 @@ docker run \
   --volumes-from redmine-data \
   --name redmine \
   -d bmichalski/redmine:3.0 \
-  bash
+  /root/on-startup.sh
