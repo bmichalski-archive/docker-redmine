@@ -32,3 +32,7 @@ tail -f \
   /opt/nginx/logs/*.log \
   /var/log/vhost/redmine/*.log \
   /opt/redmine/redmine/log/*.log
+
+#default:
+#  email_delivery:
+#    delivery_method: :smtp

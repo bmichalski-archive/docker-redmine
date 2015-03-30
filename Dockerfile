@@ -47,9 +47,6 @@ RUN \
     libmagickcore-dev \
     libmagickwand-dev
 
-COPY conf/opt/redmine/redmine/config/configuration.yml /opt/redmine/redmine/config/configuration.yml
-COPY conf/opt/redmine/redmine/config/database.yml /opt/redmine/redmine/config/database.yml
-
 RUN \
   su - redmine -c "cd /opt/redmine/redmine && bundle install --without development test"
 
@@ -68,8 +65,6 @@ RUN \
   echo deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main > /etc/apt/sources.list.d/passenger.list && \
   chown root: /etc/apt/sources.list.d/passenger.list && \
   chmod 600 /etc/apt/sources.list.d/passenger.list
-
-COPY conf/opt/redmine/redmine/config/secrets.yml /opt/redmine/redmine/config/secrets.yml
 
 RUN \
   apt-get update && \
@@ -108,6 +103,10 @@ RUN \
   chown -R www-data:adm /var/log/vhost && \
   chmod 750 /var/log/vhost && \
   chown -R redmine:adm /var/log/vhost/redmine
+
+COPY conf/opt/redmine/redmine/config/secrets.yml /opt/redmine/redmine/config/secrets.yml
+COPY conf/opt/redmine/redmine/config/configuration.yml /opt/redmine/redmine/config/configuration.yml
+COPY conf/opt/redmine/redmine/config/database.yml /opt/redmine/redmine/config/database.yml
 
 CMD \
     /root/on-startup.sh
