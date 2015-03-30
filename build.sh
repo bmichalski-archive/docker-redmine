@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build -t bmichalski/redmine:3.0 .
+docker build -t bmichalski/docker-redmine:3.0 .

@@ -108,3 +108,6 @@ RUN \
   chown -R www-data:adm /var/log/vhost && \
   chmod 750 /var/log/vhost && \
   chown -R redmine:adm /var/log/vhost/redmine
+
+CMD \
+    /root/on-startup.sh

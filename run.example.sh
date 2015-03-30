@@ -20,14 +20,14 @@ fi
 
 if ! [ -z "$REDMINE_MARIADB_EXISTS" ]
 then
-  docker kill redmine-mariadb
+  docker stop redmine-mariadb
   docker rm redmine-mariadb
 fi
 
 docker run \
-  --volumes-from mariadb-data \
+  --volumes-from redmine-mariadb-data \
   --name redmine-mariadb \
-  -d bmichalski/mariadb
+  -d bmichalski/docker-mariadb
 
 REDMINE_EXISTS=`docker inspect --format="{{ .Id }}" redmine 2> /dev/null`
 REDMINE_DATA_EXISTS=`docker inspect --format="{{ .Id }}" redmine-data 2> /dev/null`
@@ -44,7 +44,7 @@ fi
 
 if ! [ -z "$REDMINE_EXISTS" ]
 then
-  docker kill redmine && \
+  docker stop redmine && \
   docker rm redmine
 fi
 
@@ -62,5 +62,4 @@ docker run \
   --link redmine-mariadb:redmine-mariadb \
   --volumes-from redmine-data \
   --name redmine \
-  -d bmichalski/redmine:3.0 \
-  /root/on-startup.sh
+  -d bmichalski/docker-redmine:3.0

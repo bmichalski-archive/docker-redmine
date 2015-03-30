@@ -10,7 +10,7 @@ server {
   error_log /var/log/vhost/redmine/error.log;
 
   passenger_enabled on;
-  passenger_friendly_error_pages on;
+  passenger_friendly_error_pages __PASSENGER_FRIENDLY_ERROR_PAGES__;
 }
 
 passenger_pre_start http://__REDMINE_WEB_HOST__;

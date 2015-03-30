@@ -25,9 +25,9 @@ then
 fi
 
 docker run \
-  --volumes-from mariadb-data \
+  --volumes-from redmine-mariadb-data \
   --name redmine-mariadb \
-  -d bmichalski/mariadb
+  -d bmichalski/docker-mariadb
 
 REDMINE_EXISTS=`docker inspect --format="{{ .Id }}" redmine 2> /dev/null`
 REDMINE_DATA_EXISTS=`docker inspect --format="{{ .Id }}" redmine-data 2> /dev/null`
@@ -62,5 +62,5 @@ docker run \
   --link redmine-mariadb:redmine-mariadb \
   --volumes-from redmine-data \
   --name redmine \
-  -it bmichalski/redmine:3.0 \
+  -it bmichalski/docker-redmine:3.0 \
   bash
