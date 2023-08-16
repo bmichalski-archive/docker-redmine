@@ -1,7 +1,5 @@
 FROM ubuntu:14.04
 
-MAINTAINER Benjamin Michalski <benjamin.michalski@gmail.com>
-
 WORKDIR /root
 
 RUN \
@@ -16,11 +14,9 @@ RUN \
     ruby2.2 \
     ruby2.2-dev
 
-RUN \
-  apt-get install -y wget
+RUN apt-get install -y wget
 
-RUN \
-  wget http://www.redmine.org/releases/redmine-3.0.1.tar.gz
+RUN wget http://www.redmine.org/releases/redmine-3.0.1.tar.gz
 
 RUN \
   adduser --disabled-login --gecos 'redmine' redmine && \
@@ -48,7 +44,8 @@ RUN \
     libmagickwand-dev
 
 RUN \
-  su - redmine -c "cd /opt/redmine/redmine && bundle install --without development test"
+  su - redmine \
+  -c "cd /opt/redmine/redmine && bundle install --without development test"
 
 RUN \
   cd /opt/redmine/redmine && \
@@ -90,11 +87,9 @@ COPY conf/opt/nginx /opt/nginx
 
 COPY conf/root /root
 
-RUN \
-  chmod u+x /root/on-startup.sh
+RUN chmod u+x /root/on-startup.sh
 
-RUN \
-  rm /root/redmine-3.0.1.tar.gz
+RUN rm /root/redmine-3.0.1.tar.gz
 
 RUN \
   mkdir -p /var/log/vhost/redmine && \
@@ -108,5 +103,4 @@ COPY conf/opt/redmine/redmine/config/secrets.yml /opt/redmine/redmine/config/sec
 COPY conf/opt/redmine/redmine/config/configuration.yml /opt/redmine/redmine/config/configuration.yml
 COPY conf/opt/redmine/redmine/config/database.yml /opt/redmine/redmine/config/database.yml
 
-CMD \
-    /root/on-startup.sh
+CMD /root/on-startup.sh
